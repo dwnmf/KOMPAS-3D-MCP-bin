@@ -15,12 +15,12 @@ SKILL_SOURCE_DIR = REPO_ROOT / "client_assets" / "skills" / "kompas-mcp-operator
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Build a client-facing release zip from a compiled artifact downloaded from the source repository.",
+        description="Build a client-facing release zip from either a compiled client zip or a downloaded GitHub Actions artifact zip.",
     )
     parser.add_argument(
-        "--artifact-zip",
+        "--source-zip",
         required=True,
-        help="Path to the downloaded GitHub Actions artifact zip from the source repository.",
+        help="Path to either a compiled client zip or a downloaded GitHub Actions artifact zip.",
     )
     parser.add_argument(
         "--output-dir",
@@ -74,6 +74,16 @@ def _prepare_payload(artifact_zip: Path, staging_root: Path) -> Path:
     return outer_dir
 
 
+def _flatten_single_root_dir(payload_dir: Path) -> Path:
+    entries = [entry for entry in payload_dir.iterdir()]
+    if len(entries) != 1:
+        return payload_dir
+    only_entry = entries[0]
+    if not only_entry.is_dir():
+        return payload_dir
+    return only_entry
+
+
 def _remove_unwanted_files(target_dir: Path) -> None:
     for path in list(target_dir.rglob("*")):
         if not path.is_file():
@@ -93,7 +103,7 @@ def _create_release_zip(source_dir: Path, destination_zip: Path) -> None:
 
 def main() -> int:
     args = _parse_args()
-    artifact_zip = Path(args.artifact_zip).resolve()
+    artifact_zip = Path(args.source_zip).resolve()
     output_dir = Path(args.output_dir).resolve()
     bundle_name = str(args.bundle_name)
     version_label = str(args.version_label)
@@ -109,7 +119,7 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory(prefix="kompas-client-package-") as temp_dir_str:
         temp_dir = Path(temp_dir_str)
-        payload_dir = _prepare_payload(artifact_zip, temp_dir)
+        payload_dir = _flatten_single_root_dir(_prepare_payload(artifact_zip, temp_dir))
 
         package_root = temp_dir / bundle_name
         package_root.mkdir(parents=True, exist_ok=True)

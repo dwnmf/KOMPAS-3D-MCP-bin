@@ -67,7 +67,7 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/package_client_release.py \
-            --artifact-zip source-artifact.zip \
+            --source-zip source-artifact.zip \
             --output-dir build/release \
             --version-label "${{ inputs.release_tag }}"
 
