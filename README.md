@@ -58,7 +58,7 @@ C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --token 
 
 ## Подключение в MCP-клиенте
 
-### CODEX
+### CODEX(%USERPROFILE%\.codex\config.toml)
 
 ```text
 [mcp_servers.kompas-3d]
