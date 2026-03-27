@@ -1,6 +1,10 @@
 # KOMPAS-3D MCP
 Код приглашения для первых 500 пользователей: invite-c716395c
 
+Сайт активации: kompasmcp.ru
+
+Поддержать проект: https://pay.cloudtips.ru/p/cdf123e9
+
 Готовый Windows-пакет для подключения KOMPAS-3D к MCP.
 
 Внутри архива:
