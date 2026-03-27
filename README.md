@@ -1,4 +1,5 @@
-# KOMPAS-3D MCP Client
+# KOMPAS-3D MCP
+Код приглашения для первых 500 пользователей: invite-c716395c
 
 Готовый Windows-пакет для подключения KOMPAS-3D к MCP.
 
