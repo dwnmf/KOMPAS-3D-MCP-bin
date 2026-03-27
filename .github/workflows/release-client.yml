@@ -77,23 +77,19 @@ jobs:
           set -euo pipefail
           package_name="$(basename build/release/*.zip)"
           cat > release-notes.md <<EOF
-          ## Client Release Package
+          Готовый клиентский пакет для запуска KOMPAS-3D MCP на Windows.
 
-          This repository publishes only the client-facing compiled package.
+          В архиве:
+          - \`kompas-mcp.exe\`
+          - все нужные runtime-файлы
+          - инструкция по установке
+          - skill \`kompas-mcp-operator\`
 
-          Included:
-          - compiled Windows client bundle
-          - installation README
-          - \`kompas-mcp-operator\` skill
+          В этом репозитории не публикуются исходники приложения.
 
-          Not included:
-          - application source code
-          - wheel / sdist
-          - zip-inside-zip packaging
-
-          Source repository: \`${{ inputs.source_repo }}\`
-          Source artifact id: \`${{ steps.artifact.outputs.artifact_id }}\`
-          Final asset: \`${package_name}\`
+          Финальный файл: \`${package_name}\`
+          Источник сборки: \`${{ inputs.source_repo }}\`
+          Artifact id: \`${{ steps.artifact.outputs.artifact_id }}\`
           EOF
 
       - name: Create or update GitHub release

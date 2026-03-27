@@ -1,14 +1,14 @@
 # KOMPAS-3D MCP Client
 
-Готовый клиентский пакет для подключения к KOMPAS MCP на Windows.
+Готовый Windows-пакет для подключения KOMPAS-3D к MCP.
 
-В архиве вы получите:
+Внутри архива:
 - `kompas-mcp.exe`
 - все нужные runtime-файлы
 - `README.md`
 - skill `kompas-mcp-operator`
 
-## Что нужно заранее
+## Что нужно
 
 - Windows
 - установленный KOMPAS-3D
@@ -16,36 +16,36 @@
 
 ## Установка
 
-1. Скачайте последний release-архив.
-2. Распакуйте его в обычную папку, например:
+1. Скачайте последний архив из Releases.
+2. Распакуйте его, например, в:
 
 ```text
 C:\Programs\kompasmcp
 ```
 
-3. Если вам передали готовый `config.json`, положите его сюда:
+3. Если вам уже выдали `config.json`, положите его сюда:
 
 ```text
 %USERPROFILE%\.kompasmcp\config.json
 ```
 
-4. Если `config.json` вам не передали, используйте одну из команд ниже.
+4. Если `config.json` еще нет, выполните вход одной из команд ниже.
 
-## Вход и настройка
+## Вход
 
-### Вариант 1. Есть invite code
+Если у вас есть invite code:
 
 ```bash
 C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --invite-code XXXX-XXXX
 ```
 
-### Вариант 2. Есть token и client_id
+Если у вас есть `token` и `client_id`:
 
 ```bash
 C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --token <token> --client-id <client-id>
 ```
 
-После этого клиент сам создаст:
+После этого клиент создаст файл:
 
 ```text
 %USERPROFILE%\.kompasmcp\config.json
@@ -65,45 +65,35 @@ C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --token 
 }
 ```
 
-## Установка skill
+## Skill
 
-В архиве есть:
+В архиве есть папка:
 
 ```text
 skills\kompas-mcp-operator
 ```
 
-Скопируйте эту папку в:
+Скопируйте ее в:
 
 ```text
 %USERPROFILE%\.codex\skills\kompas-mcp-operator
 ```
 
-Этот skill помогает при работе с:
-- 2D drawings
-- 3D parts
-- screenshots
-- export
-- runtime diagnosis
+Этот skill помогает при работе с 2D, 3D, screenshot, export и диагностикой.
 
-## Если ничего не работает
+## Если запуск не работает
 
-Проверьте по порядку:
+Проверьте:
 
-1. `kompas-mcp.exe` действительно лежит в папке, из которой вы его запускаете.
-2. `config.json` лежит в:
-
-```text
-%USERPROFILE%\.kompasmcp\config.json
-```
-
+1. `kompas-mcp.exe` лежит в той папке, откуда вы его запускаете.
+2. `config.json` лежит в `%USERPROFILE%\.kompasmcp\config.json`.
 3. KOMPAS-3D установлен на этой Windows-машине.
 4. После логина вы перезапустили MCP-клиент.
-5. Если используется удаленный сервер, проверьте правильность `base-url`, `token` и `client_id`.
+5. Если используется удаленный сервер, проверьте `base-url`, `token` и `client_id`.
 
 ## Контакт
 
-Если нужен индивидуальный доступ или внедрение:
+Если нужен доступ или внедрение:
 
 ```text
 grandfatherofny1984@gmail.com
