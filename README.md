@@ -59,16 +59,21 @@ C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --token 
 ## Подключение в MCP-клиенте
 
 Пример конфигурации:
-
-```json
-{
-  "mcpServers": {
-    "kompas": {
-      "command": "C:/Programs/kompasmcp/kompas-mcp.exe"
+  CODEX:
+    ```json
+    [mcp_servers.kompas-3d]
+    command = "C:/Programs/kompasmcp/kompas-mcp.exe"
+    ```
+  Остальные клиенты(Claude; Roo Code; Cline):
+    ```json
+    {
+      "mcpServers": {
+        "kompas": {
+          "command": "C:/Programs/kompasmcp/kompas-mcp.exe"
+        }
+      }
     }
-  }
-}
-```
+    ```
 
 ## Skill
 
