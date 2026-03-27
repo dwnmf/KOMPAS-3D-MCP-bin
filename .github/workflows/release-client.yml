@@ -1,0 +1,124 @@
+name: Release Client Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Release tag, for example v1.0.16"
+        required: true
+        type: string
+      source_repo:
+        description: "Source repository with the compiled client artifact"
+        required: true
+        default: "dwnmf/MCP-KOMPAS-3D"
+        type: string
+      artifact_ref:
+        description: "GitHub artifact URL or numeric artifact_id from the source repository"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-release-package:
+    name: Build Client Release Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      - uses: actions/setup-python@v6.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Resolve artifact id
+        id: artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          raw="${{ inputs.artifact_ref }}"
+          artifact_id="$(printf '%s' "$raw" | grep -oE '[0-9]+' | tail -n 1)"
+          if [ -z "$artifact_id" ]; then
+            echo "Failed to resolve artifact id from: $raw"
+            exit 1
+          fi
+          echo "artifact_id=$artifact_id" >> "$GITHUB_OUTPUT"
+
+      - name: Download compiled source artifact from source repository
+        env:
+          GH_TOKEN: ${{ secrets.SOURCE_REPO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "SOURCE_REPO_TOKEN secret is required"
+            exit 1
+          fi
+
+          curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/${{ inputs.source_repo }}/actions/artifacts/${{ steps.artifact.outputs.artifact_id }}/zip" \
+            -o source-artifact.zip
+
+      - name: Package final client release
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/package_client_release.py \
+            --artifact-zip source-artifact.zip \
+            --output-dir build/release \
+            --version-label "${{ inputs.release_tag }}"
+
+      - name: Generate release notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_name="$(basename build/release/*.zip)"
+          cat > release-notes.md <<EOF
+          ## Client Release Package
+
+          This repository publishes only the client-facing compiled package.
+
+          Included:
+          - compiled Windows client bundle
+          - installation README
+          - \`kompas-mcp-operator\` skill
+
+          Not included:
+          - application source code
+          - wheel / sdist
+          - zip-inside-zip packaging
+
+          Source repository: \`${{ inputs.source_repo }}\`
+          Source artifact id: \`${{ steps.artifact.outputs.artifact_id }}\`
+          Final asset: \`${package_name}\`
+          EOF
+
+      - name: Create or update GitHub release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          asset="$(echo build/release/*.zip)"
+
+          if gh release view "${{ inputs.release_tag }}" > /dev/null 2>&1; then
+            gh release edit "${{ inputs.release_tag }}" \
+              --title "${{ inputs.release_tag }}" \
+              --notes-file release-notes.md
+            gh release upload "${{ inputs.release_tag }}" "$asset" --clobber
+          else
+            gh release create "${{ inputs.release_tag }}" \
+              --title "${{ inputs.release_tag }}" \
+              --notes-file release-notes.md \
+              "$asset"
+          fi
+
+      - name: Upload package as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-release-package
+          path: build/release/*.zip
+          if-no-files-found: error

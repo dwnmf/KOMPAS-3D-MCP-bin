@@ -1,0 +1,4 @@
+interface:
+  display_name: "KOMPAS MCP Operator"
+  short_description: "Operate KOMPAS-3D MCP workflows"
+  default_prompt: "Use $kompas-mcp-operator to plan and execute a KOMPAS-3D MCP workflow safely."
