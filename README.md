@@ -16,8 +16,8 @@
 
 ## Установка
 
-1. Скачайте последний архив из Releases.
-2. Распакуйте его, например, в:
+1. Скачайте последний архив из Releases. https://github.com/dwnmf/KOMPAS-3D-MCP-bin/releases
+3. Распакуйте его, например, в:
 
 ```text
 C:\Programs\kompasmcp
