@@ -60,7 +60,7 @@ C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --token 
 
 ### CODEX
 
-```json
+```text
 [mcp_servers.kompas-3d]
 command = "C:/Programs/kompasmcp/kompas-mcp.exe"
 ```
