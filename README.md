@@ -38,17 +38,9 @@ C:\Programs\kompasmcp
 
 ## Вход
 
-Если у вас есть invite code:
+Если у вас есть invite code(он в самом начале текста):
 
-```bash
-C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --invite-code XXXX-XXXX
-```
-
-Если у вас есть `token` и `client_id`:
-
-```bash
-C:\Programs\kompasmcp\kompas-mcp.exe login --base-url https://your-host --token <token> --client-id <client-id>
-```
+Заберите config.json с сайта https://kompasmcp.ru
 
 После этого клиент создаст файл:
 
