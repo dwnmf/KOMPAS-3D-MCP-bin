@@ -42,7 +42,7 @@ C:\Programs\kompasmcp
 
 Заберите config.json с сайта https://kompasmcp.ru
 
-После этого клиент создаст файл:
+После этого переместите файл в эту директорию:
 
 ```text
 %USERPROFILE%\.kompasmcp\config.json
