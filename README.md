@@ -1,4 +1,5 @@
-# KOMPAS-3D MCP
+<img width="869" height="137" alt="image" src="https://github.com/user-attachments/assets/407b9a0a-61bb-47c6-af20-c2f1d41a7270" />
+
 
 KOMPAS-3D MCP подключает КОМПАС-3D к AI-клиентам через MCP. Можно просить Codex, Claude, Roo Code, Cline и другие MCP-клиенты создавать 2D-чертежи, строить 3D-детали, проверять модель, делать скриншоты, экспортировать результат и помогать с диагностикой.
 
