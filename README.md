@@ -37,7 +37,7 @@ KOMPAS-3D MCP подключает КОМПАС-3D к AI-клиентам чер
 3. Получите `config.json` на сайте https://kompasmcp.ru. Если нужен invite code, используйте:
 
    ```text
-   invite-c716395c
+   invite-d56e976a
    ```
 
 4. Положите `config.json` сюда:
